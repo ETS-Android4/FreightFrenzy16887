@@ -31,6 +31,10 @@ public class Control extends Devices {
         // 1.0: forwards
         // 0.0: brake
         // -1.0 backwards
+        public static void intake(double power) {
+            intakeSpinMotor.setPower(power);
+            intakeBeltMotor.setPower(-power);
+        }
         public static void moveMotor(DcMotor motor, double power) {
             double speed = Range.clip(power, -1.0, 1.0);
             motor.setPower(speed);
@@ -85,8 +89,8 @@ public class Control extends Devices {
         public static void tankanumDrive(double rightPwr, double leftPwr, double lateralPwr) {
             double leftFrontPower = Range.clip(leftPwr - lateralPwr, -1.0, 1.0);
             double leftBackPower = Range.clip(leftPwr + lateralPwr, -1.0, 1.0);
-            double rightFrontPower = Range.clip(rightPwr - lateralPwr, -1.0, 1.0);
-            double rightBackPower = Range.clip(rightPwr + lateralPwr, -1.0, 1.0);
+            double rightFrontPower = Range.clip(rightPwr + lateralPwr, -1.0, 1.0);
+            double rightBackPower = Range.clip(rightPwr - lateralPwr, -1.0, 1.0);
 
             leftFrontDriveMotor.setPower(leftFrontPower);
             leftBackDriveMotor.setPower(leftBackPower);
