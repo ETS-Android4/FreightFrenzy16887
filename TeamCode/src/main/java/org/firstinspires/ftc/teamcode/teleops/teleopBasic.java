@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
+import static org.firstinspires.ftc.teamcode.hardware.Devices.armOuttakeServo;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.duckServo;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.linearSlideMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.driveResetEncs;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.resetMotorEnc;
 
@@ -17,7 +20,7 @@ public class teleopBasic extends BaseRobot {
 
     public void init(){
         super.init();
-        resetMotorEnc(Devices.linearSlideMotor);
+        resetMotorEnc(linearSlideMotor);
         driveResetEncs();
     }
 
@@ -44,29 +47,36 @@ public class teleopBasic extends BaseRobot {
         }
 
         //outtake
-        if (gamepad1.y && Devices.linearSlideMotor.getCurrentPosition()<maxSlideValue){
-            Control.motor.moveMotor(Devices.linearSlideMotor, 0.5);
+        if (gamepad1.dpad_up && linearSlideMotor.getCurrentPosition()<maxSlideValue){ //TODO: Tilt box as slide goes up to keep freight in
+            Control.motor.moveMotor(linearSlideMotor, 0.5);
         }
-        else if(gamepad1.x && Devices.linearSlideMotor.getCurrentPosition()>minSlideValue){
-            Control.motor.moveMotor(Devices.linearSlideMotor, -0.5);
+        else if(gamepad1.dpad_down && linearSlideMotor.getCurrentPosition()>minSlideValue){
+            Control.motor.moveMotor(linearSlideMotor, -0.5);
         }
-        else{ Devices.linearSlideMotor.setPower(0);}
-        telemetry.addData("slide position: ", Devices.linearSlideMotor.getCurrentPosition());
+        else{ linearSlideMotor.setPower(0);}
+        telemetry.addData("slide position: ", linearSlideMotor.getCurrentPosition());
+
+        if(linearSlideMotor.getCurrentPosition()>100){
+            armOuttakeServo.setPosition(0.75);
+        }
 
         //dump freight
-        if(gamepad1.a){
-            Devices.armOuttakeServo.setPosition(0.5);
+        if(gamepad1.dpad_left){
+            armOuttakeServo.setPosition(0.5);
         } else {
-            Devices.armOuttakeServo.setPosition(1);//tune positions
+            armOuttakeServo.setPosition(1);//tune positions
         }
-        telemetry.addData("outtake servo pose: ", Devices.armOuttakeServo.getPosition());
+        telemetry.addData("outtake servo pose: ", armOuttakeServo.getPosition());
 
         //ducks
-        if(gamepad1.right_bumper){
-            Devices.duckServo.setPower(1);
+        if(gamepad1.a){//TODO: change button
+            duckServo.setPower(1);
+        }
+        else if(gamepad1.b){
+            duckServo.setPower(-1);
         }
         else {
-            Devices.duckServo.setPower(0);
+            duckServo.setPower(0);
         }
 
     }
