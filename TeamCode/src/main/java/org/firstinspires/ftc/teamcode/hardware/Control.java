@@ -25,15 +25,21 @@ public class Control extends Devices {
 
     // MOTORS
 
+
     public static class motor {
 
         // moves motor based on power
         // 1.0: forwards
         // 0.0: brake
         // -1.0 backwards
+
         public static void intake(double power) {
             intakeSpinMotor.setPower(power);
             intakeBeltMotor.setPower(-power);
+        }
+        public static void extendArm(int targetPosition){
+            if(Encoders.getMotorEnc(linearSlideMotor) < targetPosition) linearSlideMotor.setPower(1.0);
+            else linearSlideMotor.setPower(0);
         }
         public static void moveMotor(DcMotor motor, double power) {
             double speed = Range.clip(power, -1.0, 1.0);
