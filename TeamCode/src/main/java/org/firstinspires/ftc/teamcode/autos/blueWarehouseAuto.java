@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.Encoders;
 
 @Autonomous
-public class redWarehouseAuto extends OpMode {
+public class blueWarehouseAuto extends OpMode {
     SampleMecanumDrive drive;
     Trajectory trajStart, trajWarehouseStart, trajAlliShip, trajPark, trajWarehouse;
     ElapsedTime runtime;
@@ -40,42 +40,41 @@ public class redWarehouseAuto extends OpMode {
         armExtension = false;
         intake = false;
 
-        Pose2d startPos = new Pose2d(10, 61, Math.toRadians(90));
+        Pose2d startPos = new Pose2d(10, -61, Math.toRadians(-90));
         drive.setPoseEstimate(startPos);
 
         //to alliance shipping hub from starting point
         trajStart = drive.trajectoryBuilder(startPos)
-                .splineTo(new Vector2d(-11, -50), Math.toRadians(90)) //TODO: tune positions
+                .splineTo(new Vector2d(-11, 50), Math.toRadians(-90)) //TODO: tune positions
                 .addDisplacementMarker(10, () -> { //displacement in inches
                     armExtension = true;
                 })
                 .build();
         //to warehouse from post preloaded starting point
         trajWarehouseStart = drive.trajectoryBuilder(trajStart.end())
-                .splineTo(new Vector2d(50, -50), Math.toRadians(0))
+                .splineTo(new Vector2d(50, 50), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
-                    intake = true;
+                    armExtension = false;
                 })
                 .build();
         //to alliance shipping hub
         trajAlliShip = drive.trajectoryBuilder(trajWarehouseStart.end())
-                .splineTo(new Vector2d(40, -16), Math.toRadians(90))
+                .splineTo(new Vector2d(40, 16), Math.toRadians(-90))
                 .addDisplacementMarker(20, () -> {
-                    slidePosition = 1;
                     armExtension = true;
                 })
                 .build();
         //park at warehouse
         trajPark = drive.trajectoryBuilder(trajAlliShip.end())
-                .splineTo(new Vector2d(55, -55), Math.toRadians(90))
-                .addDisplacementMarker(10, () -> {
+                .splineTo(new Vector2d(55, 55), Math.toRadians(-90))
+                .addDisplacementMarker(0, () -> {
                     intake = false;
                     armExtension = false;
                 })
                 .build();
         //to warehouse
         trajWarehouse = drive.trajectoryBuilder(trajAlliShip.end())
-                .splineTo(new Vector2d(20, 20), Math.toRadians(90))
+                .splineTo(new Vector2d(20, 20), Math.toRadians(-90))
                 .addDisplacementMarker(20, () -> {
                     intake = true;
                 })

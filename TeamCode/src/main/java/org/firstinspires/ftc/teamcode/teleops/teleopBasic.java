@@ -65,6 +65,9 @@ public class teleopBasic extends BaseRobot {
         else if(linearSlideMotor.getCurrentPosition()>300){
             armOuttakeServo.setPosition(0.75);
         }
+        else if(linearSlideMotor.getCurrentPosition()<=300){
+            armOuttakeServo.setPosition(0.75);
+        }
         else {
             armOuttakeServo.setPosition(1);//tune positions
         }
