@@ -71,7 +71,9 @@ public class UrMomDrive extends LinearOpMode{
                 //dumpy inputs
                 boolean dumpyPower = gamepad1.y;
 
-                // Set Motion variables
+                // Set Carousel inputs
+                boolean carouselRight = gamepad1.right_bumper;
+                boolean carouselLeft = gamepad1.left_bumper;
 
                 // Set Drive Motion
                 double leftFrontPower = Range.clip(lpwr-lstrf, -1.0, 1.0);
@@ -79,7 +81,8 @@ public class UrMomDrive extends LinearOpMode{
                 double rightFrontPower = Range.clip(rpwr+rstrf, -1.0, 1.0);
                 double rightBackPower = Range.clip(rpwr-rstrf, -1.0, 1.0);
 
-                //set intake motion x
+                //set carousel motion
+
 
 
                 //move drive motors
@@ -104,11 +107,16 @@ public class UrMomDrive extends LinearOpMode{
                 //rotate dumpy
                 if (dumpyPower){
                     dumpy.setPosition(0.7);
+                    this.sleep(300);
                     dumpy.setPosition(0);
                 }
 
                 //rotate carousel
-
+                if (carouselLeft) {
+                    carousel.setPower(1);
+                } if (carouselLeft) {
+                    carousel.setPower(-1);
+                }
 
 
                 telemetry.update();
