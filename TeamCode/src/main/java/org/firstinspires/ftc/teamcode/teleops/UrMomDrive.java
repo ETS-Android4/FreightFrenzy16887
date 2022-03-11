@@ -89,8 +89,8 @@ public class UrMomDrive extends LinearOpMode{
                 rightBack.setPower(rightBackPower);
 
                 //move intake motors
-                intake.setPower(intakePwr);
-                conveyor.setPower(intakePwr);
+                intake.setPower (Range.clip(-intakePwr, -1.0, 1.0));
+                conveyor.setPower (Range.clip(intakePwr, -1.0, 1.0));
 
                 //move linear slide
                 if (gamepad1.dpad_up || gamepad1.a) {
