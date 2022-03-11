@@ -49,10 +49,7 @@ public class RedDuckAuto extends OpMode {
                 .splineTo(new Vector2d(-70,-34), Math.toRadians(90))
                 .build();
 
-        Trajectory parkTraj = drive.trajectoryBuilder(traj1.end())
-                .strafeLeft(40)
-                .splineTo(new Vector2d(-70,-34), Math.toRadians(90))
-                .build();
+
 
         if (parkLocation.equals("warehouse")) {
             parkTraj = warehousePark;
