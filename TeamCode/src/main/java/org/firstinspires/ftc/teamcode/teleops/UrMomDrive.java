@@ -105,6 +105,11 @@ public class UrMomDrive extends LinearOpMode{
 //TODO: get dumpy working
                 if (dumpyPower){
                     dumpy.setPosition(0.7);
+                    try  {
+                        Thread.sleep(300);
+                    } catch (Exception traceback){
+                        System.out.println("e");
+                    }
                 } else dumpy.setPosition(0);
 
 //rotate carousel
