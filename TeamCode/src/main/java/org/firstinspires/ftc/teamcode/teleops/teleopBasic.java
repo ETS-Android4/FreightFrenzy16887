@@ -56,14 +56,16 @@ public class teleopBasic extends BaseRobot {
         else{ linearSlideMotor.setPower(0);}
         telemetry.addData("slide position: ", linearSlideMotor.getCurrentPosition());
 
-        if(linearSlideMotor.getCurrentPosition()>100){
-            armOuttakeServo.setPosition(0.75);
-        }
+
 
         //dump freight
         if(gamepad1.dpad_left){
             armOuttakeServo.setPosition(0.5);
-        } else {
+        }
+        else if(linearSlideMotor.getCurrentPosition()>300){
+            armOuttakeServo.setPosition(0.75);
+        }
+        else {
             armOuttakeServo.setPosition(1);//tune positions
         }
         telemetry.addData("outtake servo pose: ", armOuttakeServo.getPosition());
