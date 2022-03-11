@@ -81,9 +81,8 @@ public class UrMomDrive extends LinearOpMode{
                 double rightFrontPower = Range.clip(rpwr+rstrf, -1.0, 1.0);
                 double rightBackPower = Range.clip(rpwr-rstrf, -1.0, 1.0);
 
-                //set carousel motion
 
-
+                // set motion from inputs
 
                 //move drive motors
                 leftFront.setPower(leftFrontPower);
@@ -112,7 +111,7 @@ public class UrMomDrive extends LinearOpMode{
                 }
 
                 //rotate carousel
-                if (carouselLeft) {
+                if (carouselRight) {
                     carousel.setPower(1);
                 } if (carouselLeft) {
                     carousel.setPower(-1);
