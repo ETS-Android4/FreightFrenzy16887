@@ -113,7 +113,7 @@ public class UrMomDrive extends LinearOpMode{
                     carousel.setPower(1);
                 } if (carouselLeft) {
                     carousel.setPower(-1);
-                }
+                } else carousel.setPower(0);
 
 
                 telemetry.update();
