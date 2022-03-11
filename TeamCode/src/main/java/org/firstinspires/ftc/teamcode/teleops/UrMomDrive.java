@@ -2,12 +2,8 @@ package org.firstinspires.ftc.teamcode.teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.Gyroscope;
 
 @TeleOp
 public class UrMomDrive extends LinearOpMode{
@@ -38,6 +34,7 @@ public class UrMomDrive extends LinearOpMode{
 
 //Intake motors
         intake = hardwareMap.get(DcMotor.class, "intake");
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
         conveyor = hardwareMap.get(DcMotor.class, "conveyor");
 
 //linear slide motor
@@ -92,8 +89,8 @@ public class UrMomDrive extends LinearOpMode{
                 rightBack.setPower(rightBackPower);
 
 //move intake motors
-                intake.setPower (Range.clip(intakePwr * -1, -1.0, 1.0));
-                conveyor.setPower (Range.clip(intakePwr * 1, -1.0, 1.0));
+                intake.setPower (Range.clip(intakePwr, -1.0, 1.0));
+                conveyor.setPower (Range.clip(intakePwr, -1.0, 1.0));
 
 //move linear slide
                 if (gamepad1.dpad_up || gamepad1.a) {
