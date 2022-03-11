@@ -102,11 +102,13 @@ public class UrMomDrive extends LinearOpMode{
                 }
 
 //rotate dumpy
+//TODO: get dumpy working
                 if (dumpyPower){
                     dumpy.setPosition(0.7);
                 } else dumpy.setPosition(0);
 
 //rotate carousel
+//TODO: get the carousel spinning
                 if (carouselRight) {
                     carousel.setPower(1);
                 } if (carouselLeft) {
