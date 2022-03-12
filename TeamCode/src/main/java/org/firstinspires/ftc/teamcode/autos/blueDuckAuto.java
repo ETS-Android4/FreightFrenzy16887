@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 
 @Autonomous
-public class RedDuckAuto extends OpMode {
+public class blueDuckAuto extends OpMode {
     SampleMecanumDrive drive;
     Trajectory traj1, parkTraj, depotPark, warehousePark;
     ElapsedTime timer;
@@ -38,17 +38,17 @@ public class RedDuckAuto extends OpMode {
         Pose2d startPos = new Pose2d(-34, -65, Math.toRadians(90));
         drive.setPoseEstimate(startPos);
         //go to spin duck
-         traj1 = drive.trajectoryBuilder(startPos)
+        traj1 = drive.trajectoryBuilder(startPos)
                 .splineTo(new Vector2d(-64, -65), Math.toRadians(180))
                 .build();
         //to warehouse
-         warehousePark = drive.trajectoryBuilder(traj1.end())
+        warehousePark = drive.trajectoryBuilder(traj1.end())
                 .splineTo(new Vector2d (48, -48), Math.toRadians(0))
                 .addDisplacementMarker(20, () -> {
                     intake = true;})
                 .build();
         //to depot
-         depotPark = drive.trajectoryBuilder(traj1.end())
+        depotPark = drive.trajectoryBuilder(traj1.end())
                 .strafeLeft(40)
                 .splineTo(new Vector2d(-70,-34), Math.toRadians(90))
                 .build();

@@ -116,6 +116,7 @@ public class blueWarehouseAuto extends OpMode {
 
         int sequence = 0;
 
+        drive.update();
         if(!drive.isBusy()){
             if(sequence == 0){
                 drive.followTrajectoryAsync(trajWarehouseStart);
