@@ -11,6 +11,7 @@ import static org.firstinspires.ftc.teamcode.hardware.Devices.imu;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.driveResetEncs;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.resetMotorEnc;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
@@ -28,7 +29,8 @@ public class TeleopBasic extends BaseRobot {
 
     int maxSlideValue = 1000;
     int minSlideValue = 0;
-    
+    RevBlinkinLedDriver lights;
+    int temp = 1;
 
     public void init() {
         super.init();
@@ -40,6 +42,9 @@ public class TeleopBasic extends BaseRobot {
         telemetry.addData("right rear", rightBackDriveMotor.getDirection().toString());
         telemetry.addData("right front", rightFrontDriveMotor.getDirection().toString());
         telemetry.update();
+
+        lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);//TODO: Find better orange color
     }
 
     @Override
@@ -50,6 +55,19 @@ public class TeleopBasic extends BaseRobot {
     @Override
     public void loop() {
         super.loop();
+
+        /*if(temp == 1){
+            resetStartTime();
+            temp = 2;
+        }
+        if(time >= 90 && time < 115){
+            lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.GOLD);
+        }
+        else{
+            lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);
+        }*/
+
+
 
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double yaw = -angles.firstAngle;
