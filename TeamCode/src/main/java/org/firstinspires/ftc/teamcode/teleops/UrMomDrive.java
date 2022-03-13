@@ -25,10 +25,10 @@ public class UrMomDrive extends LinearOpMode{
     @Override
     public void runOpMode() {
 //Drive motors
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        leftBack = hardwareMap.get(DcMotor.class, "leftRear");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        rightBack = hardwareMap.get(DcMotor.class, "rightRear");
         rightBack.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
 
@@ -91,12 +91,14 @@ public class UrMomDrive extends LinearOpMode{
 //move intake motors
                 intake.setPower (Range.clip(intakePwr, -1.0, 1.0));
                 conveyor.setPower (Range.clip(intakePwr, -1.0, 1.0));
+                intake.setPower (Range.clip(outtakePwr, -1.0, 1.0));
+                conveyor.setPower (Range.clip(outtakePwr, -1.0, 1.0));
 
 //move linear slide
-                if (gamepad1.dpad_up || gamepad1.a) {
-                    linearSlide.setPower(1.0);
-                } else if (gamepad1.dpad_down || gamepad1.b) {
-                    linearSlide.setPower(-1.0);
+                if ((gamepad1.dpad_up || gamepad1.a) && linearSlide.getCurrentPosition() <1000) {
+                    linearSlide.setPower(0.7);
+                } else if ((gamepad1.dpad_down || gamepad1.b) && linearSlide.getCurrentPosition() >0) {
+                    linearSlide.setPower(-0.7);
                 } else {
                     linearSlide.setPower(0);
                 }

@@ -2,12 +2,22 @@ package org.firstinspires.ftc.teamcode.teleops;
 
 import static org.firstinspires.ftc.teamcode.hardware.Devices.armOuttakeServo;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.duckServo;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.leftBackDriveMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.leftFrontDriveMotor;
 import static org.firstinspires.ftc.teamcode.hardware.Devices.linearSlideMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.rightBackDriveMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.rightFrontDriveMotor;
+import static org.firstinspires.ftc.teamcode.hardware.Devices.imu;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.driveResetEncs;
 import static org.firstinspires.ftc.teamcode.hardware.Encoders.resetMotorEnc;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
@@ -22,6 +32,11 @@ public class teleopBasic extends BaseRobot {
         super.init();
         resetMotorEnc(linearSlideMotor);
         driveResetEncs();
+        telemetry.addData("left rear", leftBackDriveMotor.getDirection().toString());
+        telemetry.addData("left front", leftFrontDriveMotor.getDirection().toString());
+        telemetry.addData("right rear", rightBackDriveMotor.getDirection().toString());
+        telemetry.addData("right front", rightFrontDriveMotor.getDirection().toString());
+        telemetry.update();
     }
 
     @Override
@@ -32,6 +47,10 @@ public class teleopBasic extends BaseRobot {
     @Override
     public void loop() {
         super.loop();
+
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        double yaw = -angles.firstAngle;
+        telemetry.addData("angle", yaw);
 
         Control.drive.tankanumDrive(gamepad1.right_stick_y, gamepad1.left_stick_y, gamepad1.left_stick_x); // how to move
 
@@ -62,11 +81,8 @@ public class teleopBasic extends BaseRobot {
         if(gamepad1.dpad_left){
             armOuttakeServo.setPosition(0.5);
         }
-        else if(linearSlideMotor.getCurrentPosition()>300){
-            armOuttakeServo.setPosition(0.75);
-        }
-        else if(linearSlideMotor.getCurrentPosition()<=300){
-            armOuttakeServo.setPosition(0.75);
+        else if(linearSlideMotor.getCurrentPosition()>600){
+            armOuttakeServo.setPosition(0.95);
         }
         else {
             armOuttakeServo.setPosition(1);//tune positions
@@ -74,13 +90,13 @@ public class teleopBasic extends BaseRobot {
         telemetry.addData("outtake servo pose: ", armOuttakeServo.getPosition());
 
         //ducks
-        if(gamepad1.a){//TODO: change button
-            duckServo.setPower(1);
+        if(gamepad1.right_trigger > 0.5){
+            duckServo.setPower(0.8);
         }
-        else if(gamepad1.b){
-            duckServo.setPower(-1);
+        else if(gamepad1.left_trigger > 0.5){
+            duckServo.setPower(-0.8);
         }
-        else {
+        else{
             duckServo.setPower(0);
         }
 

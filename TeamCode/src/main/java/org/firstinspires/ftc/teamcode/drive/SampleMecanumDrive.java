@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.drive;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
@@ -126,6 +129,10 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         // TODO: reverse any motors using DcMotor.setDirection()
 
+        leftFront.setDirection(FORWARD);
+        leftRear.setDirection(FORWARD);
+        rightFront.setDirection(REVERSE);
+        rightRear.setDirection(REVERSE);
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
 

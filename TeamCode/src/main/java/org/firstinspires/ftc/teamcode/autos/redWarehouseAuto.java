@@ -32,6 +32,7 @@ public class redWarehouseAuto extends OpMode {
     boolean armExtension, intake;
     int slidePosition;
 
+
     public void init(){
         Devices.initDevices(hardwareMap);
         drive = new SampleMecanumDrive(hardwareMap);
@@ -40,14 +41,15 @@ public class redWarehouseAuto extends OpMode {
         armExtension = false;
         intake = false;
 
-        Pose2d startPos = new Pose2d(10, 61, Math.toRadians(90));
+        Pose2d startPos = new Pose2d(10, -61, Math.toRadians(90));
         drive.setPoseEstimate(startPos);
 
         //to alliance shipping hub from starting point
         trajStart = drive.trajectoryBuilder(startPos)
-                .splineTo(new Vector2d(-11, -50), Math.toRadians(90)) //TODO: tune positions
+                .splineTo(new Vector2d(-11, -50), Math.toRadians(
+                        90)) //TODO: tune positions
                 .addDisplacementMarker(10, () -> { //displacement in inches
-                    armExtension = true;
+                    //armExtension = true;
                 })
                 .build();
         //to warehouse from post preloaded starting point
@@ -62,7 +64,7 @@ public class redWarehouseAuto extends OpMode {
                 .splineTo(new Vector2d(40, -16), Math.toRadians(90))
                 .addDisplacementMarker(20, () -> {
                     slidePosition = 1;
-                    armExtension = true;
+                    //armExtension = true;
                 })
                 .build();
         //park at warehouse
@@ -70,7 +72,7 @@ public class redWarehouseAuto extends OpMode {
                 .splineTo(new Vector2d(55, -55), Math.toRadians(90))
                 .addDisplacementMarker(10, () -> {
                     intake = false;
-                    armExtension = false;
+                    //armExtension = false;
                 })
                 .build();
         //to warehouse
@@ -87,9 +89,6 @@ public class redWarehouseAuto extends OpMode {
 
     public void start() {
         drive.followTrajectoryAsync(trajStart);
-        armExtension = true;
-
-
         return;
     }
     public void loop(){
@@ -121,17 +120,17 @@ public class redWarehouseAuto extends OpMode {
         if(!drive.isBusy()){
             if(sequence == 0){
                 drive.followTrajectoryAsync(trajWarehouseStart);
-                armExtension = false;
+                //armExtension = false;
                 sequence++;
             }
             else if(sequence == 1){
                 drive.followTrajectoryAsync(trajAlliShip);
-                armExtension = true;
+                //armExtension = true;
                 sequence++;
             }
             else if(sequence == 2){
                 drive.followTrajectoryAsync(trajWarehouse);
-                armExtension = false;
+                //armExtension = false;
                 sequence++;
                 if(runtime.seconds() > 25){ //TODO: find the time it takes to park
                     sequence++;
@@ -140,7 +139,7 @@ public class redWarehouseAuto extends OpMode {
             }
             else if(sequence == 3){
                 drive.followTrajectoryAsync(trajPark);
-                armExtension = false;
+                //armExtension = false;
                 sequence++;
             }
 
