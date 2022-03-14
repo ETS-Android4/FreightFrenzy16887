@@ -23,7 +23,7 @@ public class basicRedDuckAuto extends LinearOpMode {
         //carousel spinner is on the front left corner of the bot.
 
         strafeToPosition(4, 0.5);
-        moveWithEncoder(-20, 0.2);
+        moveWithEncoder(-18, 0.2);
 
         //spin duck
         timeMarker = timer.seconds();
@@ -33,6 +33,6 @@ public class basicRedDuckAuto extends LinearOpMode {
 
         }
         duckServo.setPower(0);
-        strafeToPosition(6,0.5);
+        strafeToPosition(7,0.5);
     }
 }

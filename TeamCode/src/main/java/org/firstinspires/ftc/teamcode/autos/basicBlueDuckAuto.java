@@ -25,7 +25,7 @@ public class basicBlueDuckAuto extends LinearOpMode {
         //carousel spinner is on the front left corner of the bot.
 
         moveWithEncoder(5, 0.5);
-        strafeToPosition(-20, 0.2);
+        strafeToPosition(-18, 0.2);
         //spin duck
         timeMarker = timer.seconds();
 

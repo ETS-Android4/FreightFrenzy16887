@@ -23,11 +23,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.BaseRobot;
 import org.firstinspires.ftc.teamcode.hardware.Control;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
+import org.firstinspires.ftc.teamcode.hardware.Encoders;
 
 @TeleOp
 public class TeleopBasic extends BaseRobot {
 
-    int maxSlideValue = 1000;
+    int maxSlideValue = 1200;
     int minSlideValue = 0;
     RevBlinkinLedDriver lights;
     int temp = 1;
@@ -37,6 +38,7 @@ public class TeleopBasic extends BaseRobot {
 //        resetMotorEnc(linearSlideMotor);
         driveResetEncs();
         linearSlideMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Encoders.resetMotorEnc(linearSlideMotor);
         telemetry.addData("left rear", leftBackDriveMotor.getDirection().toString());
         telemetry.addData("left front", leftFrontDriveMotor.getDirection().toString());
         telemetry.addData("right rear", rightBackDriveMotor.getDirection().toString());
@@ -44,7 +46,7 @@ public class TeleopBasic extends BaseRobot {
         telemetry.update();
 
         lights = hardwareMap.get(RevBlinkinLedDriver.class, "lights");
-        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.ORANGE);//TODO: Find better orange color
+        lights.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED_ORANGE);//TODO: Find better orange color
     }
 
     @Override
@@ -92,7 +94,14 @@ public class TeleopBasic extends BaseRobot {
             linearSlideSetPosition(maxSlideValue);
         } else if (gamepad1.dpad_down) {
             linearSlideSetPosition(minSlideValue);
-        } else linearSlideMotor.setPower(0);
+        } else if (gamepad1.dpad_right) {
+            linearSlideMotor.setPower(0.5);
+        } else if (gamepad1.dpad_left) {
+            linearSlideMotor.setPower(-0.5);
+        }
+        else linearSlideMotor.setPower(0);
+
+
 
 
 
